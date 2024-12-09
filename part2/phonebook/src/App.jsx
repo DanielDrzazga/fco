@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import personsHttpClient from './services/personsHttpClient';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
@@ -11,8 +11,8 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
+    personsHttpClient
+      .getAll()
       .then(response => {
         setPersons(response.data)
       })
@@ -24,17 +24,40 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault();
-    const newPerson = {id: persons.length +1, name: newName, number: newNumber};
+    const existPerson = persons.find((person) => person.name === newName);
+    const newPerson = {name: newName, number: newNumber};
 
-    if(persons.find(person => person.name === newPerson.name)) {
-      alert(`${newName} is already added to phonebook`);
-      return;
+    if(existPerson && window.confirm(`${newName} is already added to the phonebook, replace the old number with a new one?`)) {
+      personsHttpClient
+      .update(existPerson.id, newPerson)
+      .then((updatedPerson) => {
+        setPersons(persons.map((p) => (p.id !== existPerson.id ? p : updatedPerson)));
+        setNewName('');
+        setNewNumber('');
+      })
+    } else {
+      personsHttpClient
+      .create(newPerson)
+      .then(response => {
+        setPersons(persons.concat(response.data))
+        setNewName('');
+        setNewNumber('');
+      })
     }
 
-    setPersons(persons.concat(newPerson))
-    setNewName('');
-    setNewNumber('');
   }
+
+  const deletePerson = (id) => {
+    const person = persons.find((p) => p.id === id);
+    if (window.confirm(`Delete ${person.name}?`)) {
+      personsHttpClient
+        .remove(id)
+        .then(() => {
+          setPersons(persons.filter((p) => p.id !== id));
+        });
+    }
+  };
+
 
   const personsToShow =  filter.length > 0 ? persons.filter((person) =>person.name.toLowerCase().includes(filter.toLowerCase())) : persons;
 
@@ -51,7 +74,7 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h3>Numbers</h3>
-      <Persons persons={personsToShow} />
+      <Persons persons={personsToShow} deletePerson={deletePerson}/>
     </div>
   )
 }
