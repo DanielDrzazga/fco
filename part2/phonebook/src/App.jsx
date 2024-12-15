@@ -3,12 +3,16 @@ import personsHttpClient from './services/personsHttpClient';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
+import Message from './components/Message';
+import './index.css'
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [filter, setFilter] = useState('');
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [message, setMessage] = useState(null);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     personsHttpClient
@@ -21,6 +25,13 @@ const App = () => {
   const handleNameChange = (event) => {setNewName(event.target.value);}
   const handleNumberChange = (event) => {setNewNumber(event.target.value);}
   const handleFilterChange = (event) => {setFilter(event.target.value);}
+  const handleMessage = (message, isError) => {
+    setMessage(message);
+    setError(isError);
+    setTimeout(() => {
+      setMessage(null)
+    }, 5000)
+  }
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -34,7 +45,14 @@ const App = () => {
         setPersons(persons.map((p) => (p.id !== existPerson.id ? p : updatedPerson)));
         setNewName('');
         setNewNumber('');
+        handleMessage(`Updated ${newName} phone number`);
       })
+      .catch((error => {
+        handleMessage(
+          `Information of ${newName} has already been removed from server`,
+          true
+        )
+      }))
     } else {
       personsHttpClient
       .create(newPerson)
@@ -42,6 +60,7 @@ const App = () => {
         setPersons(persons.concat(response.data))
         setNewName('');
         setNewNumber('');
+        handleMessage(`Added ${newName}`, false)
       })
     }
 
@@ -64,6 +83,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Message message={message} isError={error} />
       <Filter filter={filter} onChange={handleFilterChange} />
       <h3>Add a new</h3>
       <PersonForm
