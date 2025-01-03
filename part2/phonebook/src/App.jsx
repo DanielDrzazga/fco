@@ -48,10 +48,14 @@ const App = () => {
         handleMessage(`Updated ${newName} phone number`);
       })
       .catch((error => {
-        handleMessage(
-          `Information of ${newName} has already been removed from server`,
-          true
-        )
+        if (error.response.data.error) {
+          handleMessage(error.response.data.error, true);
+        } else {
+          handleMessage(
+            `Information of ${newName} has already been removed from server`,
+            true
+          )
+        }
       }))
     } else {
       personsHttpClient
@@ -62,6 +66,9 @@ const App = () => {
         setNewNumber('');
         handleMessage(`Added ${newName}`, false)
       })
+      .catch(error => {
+        handleMessage(error.response.data.error, true);
+    });
     }
 
   }
