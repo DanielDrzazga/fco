@@ -32,7 +32,7 @@ blogRoute.get('/:id', async (request, response) => {
 
 blogRoute.delete('/:id', async (request, response) => {
   await Blog.findByIdAndDelete(request.params.id)
-  response.status(202).end()
+  response.status(204).end()
 })
 
 blogRoute.put('/:id', async (request, response) => {
