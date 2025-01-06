@@ -1,13 +1,13 @@
-const { test, describe } = require('node:test');
-const assert = require('node:assert');
-const listHelper = require('../utils/list_helper');
+const { test, describe } = require('node:test')
+const assert = require('node:assert')
+const listHelper = require('../utils/list_helper')
 
 test('dummy returns one', () => {
-  const blogs = [];
+  const blogs = []
 
-  const result = listHelper.dummy(blogs);
-  assert.strictEqual(result, 1);
-});
+  const result = listHelper.dummy(blogs)
+  assert.strictEqual(result, 1)
+})
 
 describe('total likes', () => {
   const listWithOneBlog = [
@@ -19,7 +19,7 @@ describe('total likes', () => {
       likes: 5,
       __v: 0,
     },
-  ];
+  ]
 
   const listWithMultipleBlogs = [
     ...listWithOneBlog,
@@ -39,23 +39,23 @@ describe('total likes', () => {
       likes: 10,
       __v: 0,
     },
-  ];
+  ]
 
   test('when list is empty, equals 0', () => {
-    const result = listHelper.totalLikes([]);
-    assert.strictEqual(result, 0);
-  });
+    const result = listHelper.totalLikes([])
+    assert.strictEqual(result, 0)
+  })
 
   test('when list has only one blog, equals the likes of that', () => {
-    const result = listHelper.totalLikes(listWithOneBlog);
-    assert.strictEqual(result, 5);
-  });
+    const result = listHelper.totalLikes(listWithOneBlog)
+    assert.strictEqual(result, 5)
+  })
 
   test('of a bigger list is calculated right', () => {
-    const result = listHelper.totalLikes(listWithMultipleBlogs);
-    assert.strictEqual(result, 27);
-  });
-});
+    const result = listHelper.totalLikes(listWithMultipleBlogs)
+    assert.strictEqual(result, 27)
+  })
+})
 
 describe('favorite blog', () => {
   const listWithMultipleBlogs = [
@@ -74,18 +74,18 @@ describe('favorite blog', () => {
       author: 'Author 3',
       likes: 15,
     },
-  ];
+  ]
 
   test('returns the blog with the highest number of likes', () => {
-    const result = listHelper.favoriteBlog(listWithMultipleBlogs);
-    assert.deepStrictEqual(result, listWithMultipleBlogs[1]);
-  });
+    const result = listHelper.favoriteBlog(listWithMultipleBlogs)
+    assert.deepStrictEqual(result, listWithMultipleBlogs[1])
+  })
 
   test('returns null for an empty list', () => {
-    const result = listHelper.favoriteBlog([]);
-    assert.strictEqual(result, null);
-  });
-});
+    const result = listHelper.favoriteBlog([])
+    assert.strictEqual(result, null)
+  })
+})
 
 describe('most blogs', () => {
   const listWithMultipleBlogs = [
@@ -95,18 +95,18 @@ describe('most blogs', () => {
     { author: 'Author 3' },
     { author: 'Author 2' },
     { author: 'Author 2' },
-  ];
+  ]
 
   test('returns the author with the most blogs', () => {
-    const result = listHelper.mostBlogs(listWithMultipleBlogs);
-    assert.deepStrictEqual(result, { author: 'Author 2', blogs: 3 });
-  });
+    const result = listHelper.mostBlogs(listWithMultipleBlogs)
+    assert.deepStrictEqual(result, { author: 'Author 2', blogs: 3 })
+  })
 
   test('returns null for an empty list', () => {
-    const result = listHelper.mostBlogs([]);
-    assert.strictEqual(result, null);
-  });
-});
+    const result = listHelper.mostBlogs([])
+    assert.strictEqual(result, null)
+  })
+})
 
 describe('most likes', () => {
   const listWithMultipleBlogs = [
@@ -115,15 +115,15 @@ describe('most likes', () => {
     { author: 'Author 1', likes: 5 },
     { author: 'Author 3', likes: 100 },
     { author: 'Author 2', likes: 15 },
-  ];
+  ]
 
   test('returns the author with the most likes', () => {
-    const result = listHelper.mostLikes(listWithMultipleBlogs);
-    assert.deepStrictEqual(result, { author: 'Author 3', likes: 100 });
-  });
+    const result = listHelper.mostLikes(listWithMultipleBlogs)
+    assert.deepStrictEqual(result, { author: 'Author 3', likes: 100 })
+  })
 
   test('returns null for an empty list', () => {
-    const result = listHelper.mostLikes([]);
-    assert.strictEqual(result, null);
-  });
-});
+    const result = listHelper.mostLikes([])
+    assert.strictEqual(result, null)
+  })
+})
