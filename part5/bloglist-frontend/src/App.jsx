@@ -46,7 +46,7 @@ const App = () => {
       <p>
         {user.username} logged in <button onClick={logout}>logout</button>
       </p>
-      <Blogs handleMessage={handleMessage} user={user}/>
+      <Blogs handleMessage={handleMessage} user={user} />
     </div>
   );
 };

@@ -62,4 +62,25 @@ const Blog = ({ user, blog, updateBlog, deleteBlog }) => {
   );
 };
 
+Blog.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
+    name: PropTypes.string,
+  }).isRequired,
+  blog: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    likes: PropTypes.number.isRequired,
+    user: PropTypes.shape({
+      name: PropTypes.string,
+      id: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
+  updateBlog: PropTypes.func.isRequired,
+  deleteBlog: PropTypes.func.isRequired,
+};
+
 export default Blog;
