@@ -2,12 +2,15 @@
   "name": "bloglist-frontend",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:functional": "vitest run",
+    "test": "playwright test --project chromium",
+    "test:report": "playwright show-report"
   },
   "dependencies": {
     "@stylistic/eslint-plugin-js": "^2.12.1",
@@ -18,13 +21,23 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.25.9",
+    "@playwright/test": "^1.49.1",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/node": "^22.10.5",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",
+    "@vitest/coverage-v8": "^2.1.8",
     "eslint": "^9.15.0",
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.14",
-    "vite": "^6.0.1"
+    "eslint-plugin-vitest-globals": "^1.5.0",
+    "jsdom": "^25.0.1",
+    "playwright": "^1.49.1",
+    "vite": "^6.0.1",
+    "vitest": "^2.1.8"
   }
 }

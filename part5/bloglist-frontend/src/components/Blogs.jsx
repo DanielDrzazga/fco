@@ -19,6 +19,8 @@ const Blogs = ({ handleMessage, user }) => {
       url,
     };
 
+    blogService.setToken(user.token);
+
     blogService
       .create(newBlog)
       .then((returnedBlog) => {

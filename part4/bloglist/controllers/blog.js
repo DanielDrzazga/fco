@@ -23,7 +23,8 @@ blogRoute.post('/', async (request, response) => {
   })
 
   const savedBlog = await blog.save()
-  response.status(201).json(savedBlog)
+  const newBlog = await Blog.findById(savedBlog.id).populate('user', { username: 1,name: 1, })
+  response.status(201).json(newBlog)
 })
 
 blogRoute.get('/:id', async (request, response) => {

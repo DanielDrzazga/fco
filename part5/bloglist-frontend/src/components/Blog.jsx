@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import blogService from '../services/blogs';
+import PropTypes from 'prop-types'
 
 const Blog = ({ user, blog, updateBlog, deleteBlog }) => {
   const [visible, setVisible] = useState(false);
@@ -41,28 +42,32 @@ const Blog = ({ user, blog, updateBlog, deleteBlog }) => {
   };
 
   return (
-    <div style={blogStyle}>
-      <div>
-        {blog.title} by {blog.author}{' '}
-        <button onClick={toggleDetails}>{visible ? 'hide' : 'view'}</button>
+    <div style={blogStyle} className="blog">
+      <div className="blog-header">
+        <div className="blog-title">
+          {blog.title} by {blog.author}{' '}
+          <button onClick={toggleDetails} className="blog-toggle-details">
+            {visible ? 'hide' : 'view'}
+          </button>
+        </div>
       </div>
       {visible && (
-        <div>
-          <p>URL: {blog.url}</p>
-          <p>
+        <div className="blog-details">
+          <p className='blog-url'>URL: {blog.url}</p>
+          <p className='blog-likes'>
             Likes: {blog.likes} <button onClick={handleLike}>like</button>
           </p>
-          <p>Added by: {blog.user.name}</p>
+          <p className='blog-added-by'>Added by: {blog.user.name}</p>
         </div>
       )}
       {user && user.name === blog.user.name && (
-        <button onClick={handleDelete}>delete</button>
+        <button onClick={handleDelete} className='blog-delete-button'>delete</button>
       )}
     </div>
   );
 };
 
-Blog.propTypes = {
+Blog.propType = {
   user: PropTypes.shape({
     id: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
