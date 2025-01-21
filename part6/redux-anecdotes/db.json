@@ -1,0 +1,147 @@
+{
+  "anecdotes": [
+    {
+      "id": "1",
+      "votes": 1,
+      "content": "If it hurts, do it more often"
+    },
+    {
+      "id": "2",
+      "votes": 1,
+      "content": "Adding manpower to a late software project makes it later!"
+    },
+    {
+      "id": "3",
+      "votes": 10,
+      "content": "The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time."
+    },
+    {
+      "id": "4",
+      "votes": 1,
+      "content": "Any fool can write code that a computer can understand. Good programmers write code that humans can understand."
+    },
+    {
+      "id": "5",
+      "votes": 1,
+      "content": "Premature optimization is the root of all evil."
+    },
+    {
+      "id": "6",
+      "votes": 1,
+      "content": "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it."
+    },
+    {
+      "id": "ccce",
+      "votes": 0,
+      "content": "test"
+    },
+    {
+      "id": "70b7",
+      "content": {
+        "id": "ccce",
+        "votes": 0,
+        "content": "test"
+      },
+      "votes": 0
+    },
+    {
+      "id": "50eb",
+      "votes": 1,
+      "content": "test"
+    },
+    {
+      "id": "b2e8",
+      "content": {
+        "id": "50eb",
+        "votes": 0,
+        "content": "test"
+      },
+      "votes": 0
+    },
+    {
+      "id": "0456",
+      "votes": 0,
+      "content": "gg"
+    },
+    {
+      "id": "cd22",
+      "content": {
+        "id": "0456",
+        "votes": 0,
+        "content": "gg"
+      },
+      "votes": 0
+    },
+    {
+      "id": "f09f",
+      "votes": 0,
+      "content": "a"
+    },
+    {
+      "id": "004a",
+      "content": {
+        "id": "f09f",
+        "votes": 0,
+        "content": "a"
+      },
+      "votes": 0
+    },
+    {
+      "id": "4d5c",
+      "votes": 0,
+      "content": "11111111111111111"
+    },
+    {
+      "id": "2459",
+      "content": {
+        "id": "4d5c",
+        "votes": 0,
+        "content": "11111111111111111"
+      },
+      "votes": 0
+    },
+    {
+      "id": "5a8e",
+      "votes": 0,
+      "content": "2222222"
+    },
+    {
+      "id": "00a0",
+      "content": {
+        "id": "5a8e",
+        "votes": 0,
+        "content": "2222222"
+      },
+      "votes": 0
+    },
+    {
+      "id": "6e02",
+      "votes": 0,
+      "content": "55555555"
+    },
+    {
+      "id": "701b",
+      "content": {
+        "id": "6e02",
+        "votes": 0,
+        "content": "55555555"
+      },
+      "votes": 0
+    },
+    {
+      "id": "11fb",
+      "content": "77777",
+      "votes": 0
+    },
+    {
+      "id": "d26b",
+      "content": "",
+      "votes": 0
+    },
+    {
+      "id": "394b",
+      "content": "99999999999999999999",
+      "votes": 9
+    }
+  ]
+}

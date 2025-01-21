@@ -4,10 +4,10 @@ import { showNotification } from '../reducers/notificationReducer';
 
 const AnecdoteForm = () => {
   const dispatch = useDispatch();
-  const addAnecdote = (event) => {
+  const addAnecdote = async (event) => {
     event.preventDefault();
     const content = event.target.anecdote.value;
-    event.target.anecdote.value = '';
+    event.target.anecdote.value = ''; // Czyści pole formularza
     dispatch(createAnecdote(content));
     dispatch(showNotification(`You added: "${content}"`, 5));
   };
