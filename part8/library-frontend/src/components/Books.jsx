@@ -3,25 +3,35 @@ import { useQuery, gql } from '@apollo/client';
 const GET_BOOKS = gql`
   query {
     allBooks {
-      author
-      genres
-      published
-      title
+    id
+    title
+    author {
+      id
+      name
+      bookCount
+      born
     }
+    published
+    genres
+  }
   }
 `;
 
 const Books = (props) => {
+  const { loading, error, data } = useQuery(GET_BOOKS);
+
   if (!props.show) {
     return null;
   }
-
-  const { loading, error, data } = useQuery(GET_BOOKS);
 
   if (loading) return <p>Loading ...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
   const books = data.allBooks ?? [];
+
+  if (books.length === 0) {
+    return <p>No books found.</p>;
+  }
 
   return (
     <div>
@@ -34,11 +44,11 @@ const Books = (props) => {
             <th>author</th>
             <th>published</th>
           </tr>
-          {books.map((a) => (
-            <tr key={a.title}>
-              <td>{a.title}</td>
-              <td>{a.author}</td>
-              <td>{a.published}</td>
+          {books.map((book) => (
+            <tr key={book.id}>
+              <td>{book.title}</td>
+              <td>{book.author?.name ?? 'Unknown'}</td>
+              <td>{book.published}</td>
             </tr>
           ))}
         </tbody>

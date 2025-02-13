@@ -14,13 +14,16 @@ const ADD_BOOK = gql`
       published: $published
       genres: $genres
     ) {
-      author
-      genres
-      published
       title
+      published
+      genres
+      author {
+        name
+      }
     }
   }
 `;
+
 
 const GET_AUTHORS = gql`
   query {
@@ -35,7 +38,9 @@ const GET_AUTHORS = gql`
 const GET_BOOKS = gql`
   query {
     allBooks {
-      author
+      author {
+        name
+      }
       genres
       published
       title
@@ -63,7 +68,7 @@ const NewBook = (props) => {
 
     console.log('add book...');
 
-    addBook({
+    await addBook({
       variables: {
         title,
         author,
@@ -72,6 +77,7 @@ const NewBook = (props) => {
       },
     });
 
+    console.log("Po wywołaniu addBook");
     setTitle('');
     setPublished('');
     setAuthor('');

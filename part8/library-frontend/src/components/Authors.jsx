@@ -5,8 +5,8 @@ const GET_AUTHORS = gql`
   query {
     allAuthors {
       name
-      born
       bookCount
+      born
     }
   }
 `;
@@ -28,18 +28,20 @@ const Authors = (props) => {
     refetchQueries: [{ query: GET_AUTHORS }],
   });
 
+  const { loading, error, data } = useQuery(GET_AUTHORS);
+
   if (!props.show) {
     return null;
   }
-
-  const { loading, error, data } = useQuery(GET_AUTHORS);
-
-  console.log(data);
 
   if (loading) return <p>Loading ...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
   const authors = data.allAuthors ?? [];
+
+  if (authors.length === 0) {
+    return <p>No authors found.</p>;
+  }
 
   const submit = async (event) => {
     event.preventDefault();

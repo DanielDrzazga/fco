@@ -82,17 +82,26 @@ const resolvers = {
 
       if (args.author) {
         const author = await Author.findOne({ name: args.author });
-        if (!author) {
-          return [];
-        }
         filter.author = author.id;
       }
 
-      if (args.genere) {
+      if (args.genre) {
         filter.genres = args.genre;
       }
 
-      return await Book.find(filter).populate('author');
+      const books = await Book.find(filter).populate('author');
+
+      return books.map(async (book) => ({
+        id: book._id.toString(),
+        title: book.title,
+        published: book.published,
+        genres: book.genres,
+        author: {
+          id: book.author._id.toString(),
+          name: book.author.name,
+          bookCount: await Book.countDocuments({ author: book.author.id }),
+        },
+      }));
     },
     allAuthors: async () => {
       const authors = await Author.find();
@@ -106,23 +115,32 @@ const resolvers = {
     me: (root, args, context) => context.currentUser,
   },
   Mutation: {
-    addBook: async (root, { title, author, published, genere }) => {
+    addBook: async (root, { title, author, published, genres }) => {
       let existingAuthor = await Author.findOne({ name: author });
 
-      if (!author) {
+      if (!existingAuthor) {
         existingAuthor = new Author({ name: author });
         await existingAuthor.save();
       }
 
-      const newBook = {
+      const newBook = new Book({
         title,
-        author,
+        author: existingAuthor._id,
         published,
-        genere,
-      };
+        genres,
+      });
 
       await newBook.save();
-      return newBook.populate('author');
+
+      const savedBook = await newBook.populate('author');
+
+      return {
+        ...savedBook.toObject(),
+        author: {
+          ...savedBook.author.toObject(),
+          bookCount: await Book.countDocuments({ author: existingAuthor._id }),
+        },
+      };
     },
     editAuthor: async (root, { name, born }) => {
       const author = await Author.findOne({ name });
@@ -155,7 +173,7 @@ const resolvers = {
       const passwordValid = await bcrypt.compare(password, user.passwordHash);
       if (!passwordValid) throw new Error('Invalid username or password');
 
-      console.log(user)
+      console.log(user);
 
       const token = jwt.sign(
         { id: user._id, username: user, username },
