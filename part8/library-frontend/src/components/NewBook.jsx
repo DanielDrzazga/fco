@@ -24,7 +24,6 @@ const ADD_BOOK = gql`
   }
 `;
 
-
 const GET_AUTHORS = gql`
   query {
     allAuthors {
@@ -48,7 +47,7 @@ const GET_BOOKS = gql`
   }
 `;
 
-const NewBook = (props) => {
+const NewBook = ({ show, allGenres, setAllGenres }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [published, setPublished] = useState('');
@@ -59,14 +58,10 @@ const NewBook = (props) => {
     refetchQueries: [{ query: GET_AUTHORS }, { query: GET_BOOKS }],
   });
 
-  if (!props.show) {
-    return null;
-  }
+  if (!show) return null;
 
   const submit = async (event) => {
     event.preventDefault();
-
-    console.log('add book...');
 
     await addBook({
       variables: {
@@ -77,7 +72,9 @@ const NewBook = (props) => {
       },
     });
 
-    console.log("Po wywołaniu addBook");
+    const updatedGenres = [...new Set([...allGenres, ...genres])];
+    setAllGenres(updatedGenres);
+
     setTitle('');
     setPublished('');
     setAuthor('');
@@ -86,7 +83,9 @@ const NewBook = (props) => {
   };
 
   const addGenre = () => {
-    setGenres(genres.concat(genre));
+    if (genre.trim() && !genres.includes(genre)) {
+      setGenres([...genres, genre.trim()]);
+    }
     setGenre('');
   };
 
@@ -94,21 +93,21 @@ const NewBook = (props) => {
     <div>
       <form onSubmit={submit}>
         <div>
-          title
+          title{' '}
           <input
             value={title}
             onChange={({ target }) => setTitle(target.value)}
           />
         </div>
         <div>
-          author
+          author{' '}
           <input
             value={author}
             onChange={({ target }) => setAuthor(target.value)}
           />
         </div>
         <div>
-          published
+          published{' '}
           <input
             type="number"
             value={published}
@@ -124,7 +123,7 @@ const NewBook = (props) => {
             add genre
           </button>
         </div>
-        <div>genres: {genres.join(' ')}</div>
+        <div>genres: {genres.join(', ')}</div>
         <button type="submit">create book</button>
       </form>
     </div>
